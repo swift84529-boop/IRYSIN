@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הזמנה לאירוסין - ברוך ורבקה</title>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a1525 0%, #09060f 100%);
+            color: #f5eed8;
+            font-family: 'Frank Ruhl Libre', serif;
+            overflow-x: hidden;
+        }
+
+        /* Fireworks Canvas */
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(212, 168, 83, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(212, 168, 83, 0.6); }
+            100% { box-shadow: 0 0 15px rgba(212, 168, 83, 0.2); }
+        }
+
+        /* Layout */
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .invitation-card {
+            border: 2px solid #d4a853;
+            padding: 50px 40px;
+            border-radius: 20px;
+            background: rgba(9, 6, 15, 0.85);
+            max-width: 550px;
+            width: 100%;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            animation: pulseGlow 4s infinite, fadeInUp 1.5s ease-out;
+            position: relative;
+        }
+
+        /* Decorative Elements */
+        .invitation-card::before, .invitation-card::after {
+            content: "✦";
+            position: absolute;
+            color: #d4a853;
+            font-size: 28px;
+            background: #09060f;
+            padding: 0 15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .invitation-card::before { top: -20px; }
+        .invitation-card::after { bottom: -20px; }
+
+        h1 {
+            color: #d4a853;
+            font-size: 3rem;
+            margin: 20px 0;
+            text-shadow: 0 2px 10px rgba(212, 168, 83, 0.4);
+            line-height: 1.2;
+            opacity: 0;
+            animation: fadeInDown 1.5s ease-out 0.5s forwards;
+        }
+
+        .names {
+            font-size: 3.5rem;
+            margin-bottom: 5px;
+        }
+
+        .ampersand {
+            font-size: 2rem;
+            color: #f5eed8;
+            margin: 0 15px;
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin: 15px 0;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1s forwards;
+        }
+
+        .highlight {
+            color: #d4a853;
+            font-weight: bold;
+            font-size: 1.7rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4a853, transparent);
+            margin: 30px 0;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1.2s forwards;
+        }
+
+        /* Calendar Button */
+        .calendar-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #c9a227, #f0d060);
+            color: #09060f;
+            text-decoration: none;
+            padding: 12px 30px;
+            font-size: 1.4rem;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 30px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out 1.5s forwards;
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .calendar-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(201, 162, 39, 0.5);
+        }
+
+        .calendar-icon {
+            margin-left: 10px;
+            font-size: 1.6rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Fireworks Background -->
+    <canvas id="fireworksCanvas"></canvas>
+
+    <div class="container">
+        <div class="invitation-card">
+            <p style="font-size: 1.3rem;">שמחים ונרגשים להזמינכם לשמחת האירוסין של</p>
+            
+            <h1 class="names">
+                ברוך ישראל
+                <br>
+                <span class="ampersand">עב״ג</span>
+                <br>
+                רבקה
+            </h1>
+            
+            <div class="divider"></div>
+            
+            <p>
+                השמחה תתקיים בשעה טובה ומוצלחת ביום שני, כ"ג סיוון
+            </p>
+            <p class="highlight">
+                באולמי "אור אברהם"<br>
+                <span style="font-size: 1.3rem; color: #f5eed8; font-weight: normal;">רח' הרב הירש 19, בני ברק</span>
+            </p>
+            
+            <div class="divider"></div>
+            
+            <p style="font-size: 1.3rem;">נשמח לראותכם משתתפים בשמחתנו!<br><span style="opacity: 0.8; font-size: 1.1rem;">— משפחות החתן והכלה —</span></p>
+
+            <!-- Google Calendar Link -->
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=אירוסין+-+ברוך+ורבקה&details=נשמח+לראותכם+בשמחתנו!&location=אולמי+אור+אברהם,+הרב+הירש+19,+בני+ברק" target="_blank" class="calendar-btn">
+                <span class="calendar-icon">📅</span> שמירה ביומן
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // --- Fireworks Animation Script ---
+        const canvas = document.getElementById('fireworksCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        const colors = ['#d4a853', '#f0d060', '#ffffff', '#c9a227'];
+
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.friction = 0.95;
+                this.gravity = 0.05;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.velocity.x *= this.friction;
+                this.velocity.y *= this.friction;
+                this.velocity.y += this.gravity;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= 0.01;
+                this.draw();
+            }
+        }
+
+        function createFirework(x, y) {
+            const particleCount = 60;
+            for (let i = 0; i < particleCount; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                particles.push(new Particle(x, y, color));
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.fillStyle = 'rgba(9, 6, 15, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((particle, index) => {
+                if (particle.alpha <= 0) {
+                    particles.splice(index, 1);
+                } else {
+                    particle.update();
+                }
+            });
+        }
+
+        // Launch random fireworks
+        setInterval(() => {
+            if(Math.random() < 0.6) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * (canvas.height / 2);
+                createFirework(x, y);
+            }
+        }, 800);
+
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Launch initial fireworks on load
+        window.onload = () => {
+            animate();
+            setTimeout(() => createFirework(canvas.width / 4, canvas.height / 3), 500);
+            setTimeout(() => createFirework(canvas.width * 0.75, canvas.height / 4), 1000);
+            setTimeout(() => createFirework(canvas.width / 2, canvas.height / 5), 1500);
+        };
+    </script>
+</body>
+</html>
